@@ -167,5 +167,17 @@ public class Methods {
             logger.info(milliSeconds + " milisaniye beklendi");
     }
 
-    // button[data-testid='login-button']"
+    // //button[text()="Kaydol"]
+
+    //header[@aria-label="Üst çubuk ve kullanıcı menüsü"]//button[text()="Kaydol"]
+//css
+   //  header[aria-label*="kullanıcı"]
+    // header[aria-label$="kullanıcı menüsü"]
+    // header[aria-label^="Üst çubuk"]
+    // header[aria-label="Üst çubuk ve kullanıcı menüsü"] button:nth-child(5)
+    //  header[aria-label="Üst çubuk ve kullanıcı menüsü"] > button:nth-of-type()
+
+    // header[aria-label="Üst çubuk ve kullanıcı menüsü"] > div:nth-child(9) > button
+
+    // button[data-testid='login-button']
 }
