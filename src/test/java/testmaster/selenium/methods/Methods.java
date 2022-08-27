@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import testmaster.selenium.driver.Driver;
 
 import java.time.Duration;
@@ -78,24 +79,92 @@ public class Methods {
         return jsDriver.executeScript("return arguments[0].value;", webElement).toString();
     }
 
+    public void clear(By by){
+
+        findElementWait(by).clear();
+        logger.info(by.toString() + " elementin texti temizlendi");
+    }
+
+    public Select getSelect(By by){
+
+        return new Select(findElementWait(by));
+    }
+
+    public void selectByValue(By by, String value){
+
+        getSelect(by).selectByValue(value);
+    }
+
+    public void clickElementJs(By by){
+
+        WebElement webElement = findElementWait(by);
+        jsDriver.executeScript("arguments[0].click();", webElement);
+        logger.info(by.toString() + " elemente js ile tıklandı");
+    }
+
     public void scrollElementCenter(By by){
 
         WebElement webElement = findElementWait(by);
         jsDriver.executeScript(
                 "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});",
                 webElement);
+        logger.info(by.toString() + " scrollElementCenter");
     }
 
     public void scrollElement(By by){
 
         WebElement webElement = findElementWait(by);
         jsDriver.executeScript("arguments[0].scrollIntoView();", webElement);
+        logger.info(by.toString() + " scrollElement");
     }
 
     public void scrollElementIfNeeded(By by){
 
         WebElement webElement = findElementWait(by);
         jsDriver.executeScript("arguments[0].scrollIntoViewIfNeeded();", webElement);
+        logger.info(by.toString() + " scrollElementIfNeeded");
+    }
+
+    public boolean isElementVisible(By by, long timeout){
+
+        try {
+            setFluentWait(timeout).until(ExpectedConditions.visibilityOfElementLocated(by));
+            logger.info(by.toString() + " true");
+            return true;
+        }catch (Exception e){
+            logger.info(by.toString() + " false");
+            logger.error(e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isElementClickable(By by, long timeout){
+
+        try {
+            setFluentWait(timeout).until(ExpectedConditions.elementToBeClickable(by));
+            logger.info(by.toString() + " true");
+            return true;
+        }catch (Exception e){
+            logger.info(by.toString() + " false");
+            logger.error(e.getMessage());
+            return false;
+        }
+    }
+
+    public void waitBySeconds(long seconds){
+
+        waitByMilliSeconds(1000*seconds);
+        logger.info(seconds + " saniye beklendi");
+    }
+    public void waitByMilliSeconds(long milliSeconds){
+
+        try {
+            Thread.sleep(milliSeconds);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        if (Math.floorMod(milliSeconds,1000) != 0)
+            logger.info(milliSeconds + " milisaniye beklendi");
     }
 
     // button[data-testid='login-button']"
