@@ -163,7 +163,7 @@ public class Methods {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        if (Math.floorMod(milliSeconds,1000) != 0)
+        if (milliSeconds % 1000 != 0)
             logger.info(milliSeconds + " milisaniye beklendi");
     }
 
